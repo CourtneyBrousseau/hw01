@@ -22,7 +22,7 @@ window.builtins = {};
 builtins.trim = function(str) {
   let newStr = "";
   for (let i = 0; i < str.length; i++) {
-    if (str[i] !== " ") {
+    if (str[i] !== " " || (str[i + 1] !== " " && str[i - 1] !== " ")) {
       newStr += str[i];
     }
   }
@@ -65,6 +65,8 @@ builtins.search = function(sourceString, searchString) {
 // ex. builtins.reverse([123]) -> [123]
 
 builtins.reverse = function(arr) {
-  let next = arr.unshift();
-  return builtins.reverse(arr).concat(next);
+  if (arr.length === 0) {
+    return arr
+  }
+  return builtins.reverse(arr.splice(1, arr.length)).concat(arr[0]);
 };
